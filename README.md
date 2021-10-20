@@ -1,3 +1,5 @@
+(Do not display this in the rendered blob to see the content properly)
+
 Let us define a binary operation ⊗ on three symbols a, b, c according to the following table; thus a ⊗ b = b , b ⊗ a = c , and so on. Notice that the operation defined by the table is neither associative nor commutative.
 ⊗ a b c
 a b b a
