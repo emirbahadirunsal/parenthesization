@@ -1,14 +1,24 @@
-(Do not display this in the rendered blob to see the content properly)
+# Binary Operation Parenthesization Project
 
-Let us define a binary operation ⊗ on three symbols a, b, c according to the following table; thus a ⊗ b = b , b ⊗ a = c , and so on. Notice that the operation defined by the table is neither associative nor commutative.
-⊗ a b c
-a b b a
-b c b a
-c a c c
-Describe an efficient algorithm that examines a string of these symbols, say bbbbac, and decides whether or not it is possible to parenthesize the string in such a way that the value of the resulting expression is p = a. For example, on input bbbbac your algorithm should return yes because ((b ⊗ (b ⊗ b)) ⊗ (b ⊗ a)) ⊗ c = a.
+This project presents an efficient algorithm that examines a string of symbols from a set (for example, `{a, b, c}`) and decides whether or not it is possible to parenthesize the string in such a way that the value of the resulting expression is a specific target symbol. 
 
-For 1 ≤ i ≤ j ≤ n, we let T[i, j] ⊆ {a, b, c} denote the set of symbols e for which there is a parenthesization of xi..xj yielding e. We let e ⊗ b denote the product of e and b using the table. p ∈ {a, b, c} is the symbol we are considering.
-Pseudocode
+The binary operation `⊗` on the symbols `a`, `b`, and `c` is defined according to the following table. It is important to note that this operation is neither associative nor commutative:
+
+```
+   ⊗ | a | b | c
+  ---|---|---|---
+   a | b | b | a
+   b | c | b | a
+   c | a | c | c
+```
+
+For example, given the string `bbbbac` and the target symbol `a`, our algorithm should return `yes` because `((b ⊗ (b ⊗ b)) ⊗ (b ⊗ a)) ⊗ c = a`.
+
+The algorithm employs a dynamic programming approach. For 1 ≤ i ≤ j ≤ n, we let T[i, j] ⊆ {a, b, c} denote the set of symbols e for which there is a parenthesization of xi..xj yielding e. We let e ⊗ b denote the product of e and b using the operation table. The symbol p ∈ {a, b, c} is our target symbol. 
+
+## Pseudocode
+
+```plaintext
 for i ← 1 to n do
   T[i, i] ← xi
 for s ← 1 to n-1 do
@@ -20,26 +30,68 @@ for s ← 1 to n-1 do
           T[i,i+s] ← T[i,i+s] ∪e ⊗ b
 if p ∈ T[1,n] then
   return yes
-  else
-    return no
-    
-Extend and implement the Dynamic Programming Algorithm above so that it prints a parenthesized expression yielding the goal or “No parenthesization possible.” if no such parenthesization exists.
+else
+  return no
+```
 
-Input format (no need to check its validity):
-- The first line contains a positive integer (say n).
-- The symbols: The second line contains at least n characters (if it contains more, only the first n are relevant). These characters are the symbols of the alphabet. The last symbol is the “goal”.
-- The operation: The following n lines contain at least n characters each (if a line contains more characters, only the first n are relevant). This is an nxn matrix containing the results of the operations.
-- Expression: The last line of the input contains a sequence of characters, consisting of the valid symbols for which you have to seek for a parenthesization.
+## Getting Started
 
-A sample input:
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+
+### Prerequisites
+
+You will need a C++ compiler (like g++ or clang++) installed on your system to run this code. If you don't have one already installed, you can get it by downloading from the official websites.
+
+### Installing
+
+1. Clone the repo or download the .cpp file to your local system.
+2. Navigate to the directory containing the .cpp file in your terminal.
+3. Compile the file using your C++ compiler.
+
+For example, if you're using g++, type the following command and press enter:
+
+```bash
+g++ parenthesization.cpp -o parenthesization
+```
+
+### Usage
+
+You can then run the program using the following command:
+
+```bash
+./parenthesization
+```
+
+#### Input
+
+The first line contains a positive integer which defines the number of symbols. The second line contains these symbols. The last symbol is the “goal”. The following n lines make an nxn matrix that represents the results of the operations. The last line contains a sequence of characters for which you have to seek for a parenthesization.
+
+Sample input:
+
+```text
 3
 abc
 aac
 baa
 caa
 caaccb
-and corresponding possible outputs (not exhaustive):
+```
+
+#### Output
+
+The output will be a parenthesized expression yielding the goal if one exists. If no such parenthesization exists, it outputs "No parenthesization is possible."
+
+Sample outputs for the above input:
+
+```text
 (c((aa)((cc)b))
 (c(a(a((cc)b))))
 (((ca)a)((cc)b))
 (((ca)a)((cc)b))
+```
+
+## Code Description
+
+The code contains an `Operation` class that holds the data and methods needed to solve the problem. It reads the input, processes it, and outputs the result. The `showTime()` function implements the main part of the dynamic programming algorithm.
+
+The function `parenthesization()` outputs the final result: a parenthesized expression yielding the goal, or "No parenthesization possible." if no such parenthesization exists.
